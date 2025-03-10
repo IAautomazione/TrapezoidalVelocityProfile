@@ -2,7 +2,7 @@
 Author: Archetti Ivan
 Date: 01/12/2024
 
-Class to calculate different law of motion
+Class to calculate different motion profile
 """
 #=========================================================================================================================
 
@@ -12,14 +12,14 @@ from numpy import sin, cos, pi
 
 #=========================================================================================================================
 
-class LOM():
+class MotionProfile():
     def __init__(self):
         pass
         
 
 #=========================================================================================================================
 
-    def trapezoidal_LOM(self, Ds=1, s0=0, Dt=1, ti=0, n_points=100, shape=[0.2, 0.6, 0.2]) -> tuple:
+    def trapezoidal_MP(self, Ds=1, s0=0, Dt=1, ti=0, n_points=100, shape=[0.2, 0.6, 0.2]) -> tuple:
         """
         Calculate a trapezoidal law of motion (with constant acceleration) of a straight path.
         Sum of shape values must be always 1

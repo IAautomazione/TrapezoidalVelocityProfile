@@ -6,8 +6,8 @@ Messa in opera delle leggi di moto e composizione di moti
 """
 
 
-from LOM import LOM
-from PlotLOM import PlotLOM
+from MotionProfile import MotionProfile
+from PlotMotionProfile import PlotMotionProfile
 from TracePath import TracePath
 import numpy as np
 from numpy import pi
@@ -22,8 +22,8 @@ def traccia_linea_generica():
     n_punti = 1000
 
     um1 = ("Tempo", "Spazio", "Velocità", "Accelerazione")    
-    LDM = LOM()
-    PlotLDM = PlotLOM(um_axes=um1)
+    LDM = MotionProfile()
+    PlotLDM = PlotMotionProfile(um_axes=um1)
     TracciaPercorso = TracePath()
 
     # discretizzo il percorso
@@ -43,11 +43,11 @@ def traccia_linea_generica():
     shape = [0.2, 0.6, 0.2]
 
     # spostamento in modulo
-    t, s, v, a  = LDM.trapezoidal_LOM(Ds=Ds, Dt=Dt, ti=t_i, s0=s0, n_points=n_punti, shape=shape)
+    t, s, v, a  = LDM.trapezoidal_MP(Ds=Ds, Dt=Dt, ti=t_i, s0=s0, n_points=n_punti, shape=shape)
 
     um_x = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_x = ["          Moto", "Spazio", "Velocità", "Accelerazione"] 
-    PlotLDM.plot_law_of_motion(title=titoli_x, t=t, s=s, v=v, a=a, amax=(10,-10), vmax=(2,1), um=um_x)
+    PlotLDM.plot_motion_profile(title=titoli_x, t=t, s=s, v=v, a=a, amax=(10,-10), vmax=(2,1), um=um_x)
 
     # spostamento, velocità ed accelerazione in x e y
     angle = LDM.get_line_angle(P0=punto_partenza, P1=punto_arrivo)
@@ -57,11 +57,11 @@ def traccia_linea_generica():
 
     um_x = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_x = ["          Moto in x", "Spazio in x", "Velocità in x", "Accelerazione in x"] 
-    PlotLDM.plot_law_of_motion(title=titoli_x, t=t, s=sx, v=vx, a=ax, amax=(0,0), vmax=(0,0), um=um_x)
+    PlotLDM.plot_motion_profile(title=titoli_x, t=t, s=sx, v=vx, a=ax, amax=(0,0), vmax=(0,0), um=um_x)
     
     um_y = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_y = ["          Moto in y", "Spazio in y", "Velocità in y", "Accelerazione in y"] 
-    PlotLDM.plot_law_of_motion(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)
+    PlotLDM.plot_motion_profile(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)
 
     
 
@@ -78,8 +78,8 @@ def traccia_arco():
     n_punti = 1000
 
     um1 = ("Tempo", "Spazio", "Velocità", "Accelerazione")    
-    LDM = LOM()
-    PlotLDM = PlotLOM(um_axes=um1)
+    LDM = MotionProfile()
+    PlotLDM = PlotMotionProfile(um_axes=um1)
     TracciaPercorso = TracePath()
 
     # discretizzo il percorso
@@ -95,12 +95,12 @@ def traccia_arco():
     shape = [0.2, 0.6, 0.2]
     s0 = angolo_partenza*R
     Ds = angolo*R
-    par_cinematici = list(LDM.trapezoidal_LOM(Ds=Ds, Dt=Dt, ti=ti, s0=s0, n_points=n_punti, shape=shape))
+    par_cinematici = list(LDM.trapezoidal_MP(Ds=Ds, Dt=Dt, ti=ti, s0=s0, n_points=n_punti, shape=shape))
     t, s, v, a, at, ac = LDM.arc_motion(par_cinematici, radius=R, start_angle=angolo_partenza)
 
     um1 = ["[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$"]
     titoli = ["          Moto curvilineo", "Spazio", "Velocità", "Accelerazione totale"]
-    PlotLDM.plot_law_of_motion(title=titoli, t=t, s=s, v=v, a=a, um=um1)
+    PlotLDM.plot_motion_profile(title=titoli, t=t, s=s, v=v, a=a, um=um1)
 
     # spostamento, velocità ed accelerazione in x e y
     sx, sy = LDM.get_arc_position()
@@ -109,26 +109,26 @@ def traccia_arco():
     acx, acy = LDM.get_arc_centr_acceleration()
     ax, ay = LDM.get_arc_total_acceleration()
 
-    """PlotLDM.plot_kinematic_value(title="Accelerazione centripeta", t=t, x=ac, um=["s","$[\\frac{m}{s^{2}}]$"], 
+    """PlotMotionProfile.plot_kinematic_value(title="Accelerazione centripeta", t=t, x=ac, um=["s","$[\\frac{m}{s^{2}}]$"], 
                                  label=["tempo", "Accelerazione centripeta"], color="RED")
     
-    PlotLDM.plot_kinematic_value(title="Accelerazione tangenziale", t=t, x=at, um=["s","$[\\frac{m}{s^{2}}]$"], 
+    PlotMotionProfile.plot_kinematic_value(title="Accelerazione tangenziale", t=t, x=at, um=["s","$[\\frac{m}{s^{2}}]$"], 
                                  label=["tempo", "Accelerazione tangenziale"], color="RED")"""
 
     """um_y = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_y = ["          Moto in y", "Spazio in y", "Velocità in y", "Accelerazione in y"] 
-    PlotLDM.plot_law_of_motion(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)"""
+    PlotMotionProfile.plot_motion_profile(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)"""
 
-    """PlotLDM.plot_kinematic_value(title="Accelerazione totale", t=t, x=a, um=["s","$[\\frac{m}{s^{2}}]$"], 
+    """PlotMotionProfile.plot_kinematic_value(title="Accelerazione totale", t=t, x=a, um=["s","$[\\frac{m}{s^{2}}]$"], 
                                  label=["tempo", "Accelerazione totale"], color="RED")"""
     
     um_y = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_y = ["          Moto in y", "Spazio in y", "Velocità in y", "Accelerazione totale in y"] 
-    PlotLDM.plot_law_of_motion(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)
+    PlotMotionProfile.plot_motion_profile(title=titoli_y, t=t, s=sy, v=vy, a=ay, amax=(0,0), vmax=(0,0), um=um_y)
 
     um_x = ("[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$")
     titoli_y = ["          Moto in x", "Spazio in x", "Velocità in x", "Accelerazione totale in x"] 
-    PlotLDM.plot_law_of_motion(title=titoli_y, t=t, s=sx, v=vx, a=ax, amax=(0,0), vmax=(0,0), um=um_x)
+    PlotMotionProfile.plot_motion_profile(title=titoli_y, t=t, s=sx, v=vx, a=ax, amax=(0,0), vmax=(0,0), um=um_x)
 
 
 # =======================================================================================================================
@@ -136,8 +136,8 @@ def traccia_arco():
 def traccia_percorso():
     # prove legge di moto
     um1 = ("Tempo", "Spazio", "Velocità", "Accelerazione")    
-    LDM = LOM()
-    PlotLDM = PlotLOM(um_axes=um1)
+    LDM = MotionProfile()
+    PlotLDM = PlotMotionProfile(um_axes=um1)
     TracciaPercorso = TracePath()
 
     n_punti = 1000
@@ -151,7 +151,7 @@ def traccia_percorso():
 
     # mostro il percorso
     um2 = ("[m]", "[m]")
-    PlotLDM.plot_path(x=pos_x, y=pos_y, um=um2)
+    PlotMotionProfile.plot_path(x=pos_x, y=pos_y, um=um2)
 
     # -------------------------------------------------------------------------------------------------------
     # calcolo la legge di moto
@@ -185,7 +185,7 @@ def traccia_percorso():
         
         Dt = Ds/(v_max*(forma[0]/2 + forma[1] + forma[2]/2))
 
-        ti, si, vi, ai = LDM.trapezoidal_LOM(Ds=Ds, Dt=Dt, ti=t0, s0=s0, n_points=n_punti, shape=forma)
+        ti, si, vi, ai = LDM.trapezoidal_MP(Ds=Ds, Dt=Dt, ti=t0, s0=s0, n_points=n_punti, shape=forma)
         
         if i % 2 == 1:
             par_cinematici = ti, si, vi, ai
@@ -202,15 +202,15 @@ def traccia_percorso():
     # traccio la legge di moto complessiva
     um1 = ["[s]", "[m]", "$[\\frac{m}{s}]$", "$[\\frac{m}{s^{2}}]$"]
     titoli = ["          Moto rettilineo", "Spazio percorso", "Velocità percorso", "Accelerazione percorso"]
-    PlotLDM.plot_law_of_motion(title=titoli, t=t, s=s, v=v, a=a, um=um1)
+    PlotMotionProfile.plot_motion_profile(title=titoli, t=t, s=s, v=v, a=a, um=um1)
 
 # =======================================================================================================================
 
 def traccia_percorso_utensile():
     # prove legge di moto
     um1 = ("Tempo", "Spazio", "Velocità", "Accelerazione")    
-    LDM = LOM()
-    PlotLDM = PlotLOM(um_axes=um1)
+    LDM = MotionProfile()
+    PlotLDM = PlotMotionProfile(um_axes=um1)
     TracciaPercorso = TracePath()
 
     n_punti = 1000
@@ -225,11 +225,12 @@ def traccia_percorso_utensile():
     um2 = ("[m]", "[m]")
     PlotLDM.plot_path(x=pos_x, y=pos_y, um=um2)
 
+# =======================================================================================================================
 
 def traccia_poligono():
     um1 = ("Tempo", "Spazio", "Velocità", "Accelerazione")
-    LDM = LOM()
-    PlotLDM = PlotLOM(um_axes=um1)
+    LDM = MotionProfile()
+    PlotLDM = PlotMotionProfile(um_axes=um1)
     TracciaPercorso = TracePath()
 
     n_punti = 1000

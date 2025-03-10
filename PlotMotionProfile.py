@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 
 #=========================================================================================================================
 
-class PlotLOM():
+class PlotMotionProfile():
     def __init__(self, um_axes=("time", "space", "vel", "acc")):
         self.time = um_axes[0]
         self.space = um_axes[1]
@@ -36,13 +36,12 @@ class PlotLOM():
         plt.xlabel(f"{label[0]} {um[0]}", {'size': 12})  
         plt.ylabel(f"{label[1]} {um[1]}", {'size': 12})  
         plt.title(title, {'size': 16, 'color':'darkred'})  
-        #plt.legend()  
 
         plt.show()
 
 #=========================================================================================================================
 
-    def plot_law_of_motion(self, title=["", "", "", ""], t=np.array([]), s=np.array([]), v=np.array([]), a=np.array([]), amax=(0,0), vmax=(0,0), um=[]) -> None:
+    def plot_motion_profile(self, title=["", "", "", ""], t=np.array([]), s=np.array([]), v=np.array([]), a=np.array([]), amax=(0,0), vmax=(0,0), um=[]) -> None:
         """
         Show space, speed and acceleration of a law of motion 
         

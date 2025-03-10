@@ -2,7 +2,7 @@
 Author: Archetti Ivan
 Date: 08/02/2025
 
-Class to draw path of a body
+Class to draw path of a body on x, y plan
 """
 #=========================================================================================================================
 
@@ -15,7 +15,7 @@ from numpy import sin, cos, pi
 class TracePath():
     def __init__(self):
         pass
-        #self.l_polygon = 0
+        
     
         
 #=========================================================================================================================
